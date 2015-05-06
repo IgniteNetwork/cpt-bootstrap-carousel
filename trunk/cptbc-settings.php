@@ -19,6 +19,7 @@ function cptbc_set_options (){
 		'showcaption' => 'true',
 		'showtitle' => 'true',
 		'showcontrols' => 'true',
+		'showeditor' => 'false',
 		'customprev' => '',
 		'customnext' => '',
 		'orderby' => 'menu_order',
@@ -150,6 +151,13 @@ class cptbc_settings_page {
 				'showcontrols', // ID
 				__('Show Slide Controls?', 'cpt-bootstrap-carousel'), // Title
 				array( $this, 'showcontrols_callback' ), // Callback
+				'cpt-bootstrap-carousel', // Page
+				'cptbc_settings_behaviour' // Section
+		);
+		add_settings_field(
+				'showeditor', // ID
+				__('Use WYSIWYG editor?', 'cpt-bootstrap-carousel'), // Title
+				array( $this, 'showeditor_callback' ), // Callback
 				'cpt-bootstrap-carousel', // Page
 				'cptbc_settings_behaviour' // Section
 		);
@@ -386,6 +394,19 @@ class cptbc_settings_page {
 			<option value="true"'.$cptbc_showcontrols_t.'>'.__('Show', 'cpt-bootstrap-carousel').'</option>
 			<option value="false"'.$cptbc_showcontrols_f.'>'.__('Hide', 'cpt-bootstrap-carousel').'</option>
 			<option value="custom"'.$cptbc_showcontrols_c.'>'.__('Custom', 'cpt-bootstrap-carousel').'</option>
+		</select>';
+	}
+	public function showeditor_callback() {
+		if(isset( $this->options['showeditor'] ) && $this->options['showeditor'] == 'false'){
+			$cptbc_showeditor_t = '';
+			$cptbc_showeditor_f = ' selected="selected"';
+		} else {
+			$cptbc_showeditor_t = ' selected="selected"';
+			$cptbc_showeditor_f = '';
+		}
+		print '<select id="showeditor" name="cptbc_settings[showeditor]">
+			<option value="true"'.$cptbc_showeditor_t.'>'.__('Yes', 'cpt-bootstrap-carousel').'</option>
+			<option value="false"'.$cptbc_showeditor_f.'>'.__('No', 'cpt-bootstrap-carousel').'</option>
 		</select>';
 	}
 	public function orderby_callback() {

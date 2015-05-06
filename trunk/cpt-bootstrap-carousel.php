@@ -36,22 +36,34 @@ function cptbc_post_type() {
 		'parent_item_colon' => '',
 		'menu_name' => __('Carousel', 'cpt-bootstrap-carousel')
 	);
+	$supports = array(
+  	'title',
+  	'excerpt',
+  	'thumbnail',
+  	'page-attributes'
+	);
+
+  $options = get_option( 'cptbc_settings' );
+
+  if(isset($options['showeditor']) && $options['showeditor'] == 'true') {
+    $supports[] = 'editor';
+  }
+
 	$args = array(
 		'labels' => $labels,
 		'public' => true,
 		'exclude_from_search' => true,
 		'publicly_queryable' => false,
-		'show_ui' => true, 
-		'show_in_menu' => true, 
+		'show_ui' => true,
+		'show_in_menu' => true,
 		'query_var' => true,
 		'rewrite' => true,
 		'capability_type' => 'page',
-		'has_archive' => true, 
+		'has_archive' => true,
 		'hierarchical' => false,
 		'menu_position' => 21,
-		'menu_icon' => 'dashicons-images-alt',
-		'supports' => array('title','excerpt','thumbnail', 'page-attributes')
-	); 
+		'supports' => $supports
+	);
 	register_post_type('cptbc', $args);
 }
 // Create a taxonomy for the carousel post type
@@ -67,7 +79,7 @@ add_action( 'init', 'cptbc_taxonomies', 0 );
 function cptbc_addFeaturedImageSupport() {
 	$supportedTypes = get_theme_support( 'post-thumbnails' );
 	if( $supportedTypes === false ) {
-		add_theme_support( 'post-thumbnails', array( 'cptbc' ) );	  
+		add_theme_support( 'post-thumbnails', array( 'cptbc' ) );
 		add_image_size('featured_preview', 100, 55, true);
 	} elseif( is_array( $supportedTypes ) ) {
 		$supportedTypes[0][] = 'cptbc';

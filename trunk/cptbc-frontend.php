@@ -63,7 +63,7 @@ function cptbc_frontend($atts){
 		if ( '' != get_the_post_thumbnail(get_the_ID(), $atts['image_size']) ) {
 			$post_id = get_the_ID();
 			$title = get_the_title();
-			$content = get_the_excerpt();
+			$content = $atts['showeditor'] == 'true' ? str_replace( ']]>', ']]&gt;', apply_filters( 'the_content', get_the_content() ) ) : get_the_excerpt();
 			$image = get_the_post_thumbnail( get_the_ID(), $atts['image_size'] );
 			$image_src = wp_get_attachment_image_src(get_post_thumbnail_id(), $atts['image_size']);
 			$image_src = $image_src[0];
