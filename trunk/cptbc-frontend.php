@@ -79,7 +79,7 @@ function cptbc_frontend($atts){
 		ob_start();
 		?>
 		<div id="cptbc_<?php echo $id; ?>" class="carousel slide" <?php if($atts['use_javascript_animation'] == '0'){ echo ' data-ride="carousel"'; } ?> data-interval="<?php echo $atts['interval']; ?>">
-			
+
 			<?php // First content - the carousel indicators
 			if( count( $images ) > 1 ){ ?>
 				<ol class="carousel-indicators">
@@ -93,11 +93,11 @@ function cptbc_frontend($atts){
 			<?php
 			// Carousel Content
 			foreach ($images as $key => $image) {
-				
+
 				if( !isset($atts['link_button']) ) {
 					$atts['link_button'] = 0;
 				}
-				
+
 				// Build anchor link so it can be reused
 				$linkstart = '';
 				$linkend = '';
@@ -122,12 +122,12 @@ function cptbc_frontend($atts){
 							$linkstart .= ' target="_blank"';
 						}
 						echo ' style="display:block; width:100%; height:100%;">&nbsp;</a>';
-					} 
+					}
 					// The Caption div
 					if(($atts['showcaption'] === 'true' && strlen($image['title']) > 0 && strlen($image['content']) > 0) || ($image['url'] && $atts['link_button'] == 1))  {
 						echo '<div class="carousel-caption">';
 						// Title
-						if(strlen($image['title']) > 0){
+						if($atts['showtitle'] === 'true' && strlen($image['title']) > 0){
 							echo $atts['before_title'].$linkstart.$image['title'].$linkend.$atts['after_title'];
 						}
 						// Caption
@@ -135,7 +135,7 @@ function cptbc_frontend($atts){
 							echo $atts['before_caption'].$linkstart.$image['content'].$linkend.$atts['after_caption'];
 						}
 						// Link Button
-						if($image['url'] && $atts['link_button'] == 1){ 
+						if($image['url'] && $atts['link_button'] == 1){
 							if(isset($atts['link_button_before'])) echo $atts['link_button_before'];
 							$target = '';
 							if($image['url_openblank']) {
@@ -187,10 +187,10 @@ function cptbc_frontend($atts){
 		$output = ob_get_contents();
 		ob_end_clean();
 	}
-	
+
 	// Restore original Post Data
-	wp_reset_postdata();  
-	
+	wp_reset_postdata();
+
 	return $output;
 }
 
